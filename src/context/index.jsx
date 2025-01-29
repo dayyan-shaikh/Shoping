@@ -49,8 +49,8 @@ function ShoppingCartProvider({ children }) {
     navigate("/cart");
   }
 
+  let cpyExistingCartItem = [...cartItem];
   function handleRemoveCart(getProductDetails, FullRemoveItem) {
-    let cpyExistingCartItem = [...cartItem];
     const findCurrentItemIndex = cpyExistingCartItem.findIndex(
       (item) => item.id === getProductDetails.id
     );
@@ -71,8 +71,10 @@ function ShoppingCartProvider({ children }) {
 
   useEffect(() => {
     fetchListOfProducts();
-    setCartItem(JSON.parse(localStorage.getItem("cartItems") || []));
+    const storedCartItems = localStorage.getItem("cartItems");
+    setCartItem(storedCartItems ? JSON.parse(storedCartItems) : []);
   }, []);
+  
   console.log(cartItem);
 
   return (
